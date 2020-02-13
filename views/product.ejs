@@ -5,7 +5,7 @@
     </head>
     
     <body>
-        <header class="container">
+        <header class="container fixed-top bg-white">
             <%- include('partials/header') %>
 
             <div>
@@ -15,7 +15,7 @@
                         <% let link = ''; %>
                         <% _.each(product.primary_category_id.split('-'), function(category) { %>
                         <% link+=`-${category}`; %>
-                            <li class="breadcrumb-item"><a href="../<%= link.slice(1) %>"><%= link.slice(1) %></a></li>
+                            <li class="breadcrumb-item"><a href="../categories/<%= link.slice(1) %>"><%= link.slice(1) %></a></li>
                         <% }); %>
                     </ol>
                 </nav>
@@ -91,9 +91,9 @@
 
         </main>
 
-        <footer>
-            <%- include('partials/footer') %>
-        </footer>
+
+        <%- include('partials/footer') %>
+
         
         <%- include('partials/bottom_scripts') %>
     </body>

@@ -5,7 +5,7 @@
     </head>
     
     <body>
-        <header class="container">
+        <header class="container fixed-top bg-white">
             <%- include('partials/header') %>
             
             <div>
@@ -13,10 +13,10 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
                         <% let link = ''; %>
-                        <% _.each(products[0].primary_category_id.split('-'), function(category) { %>
+                        <% _.each(id.split('-'), function(category) { %>
                         <% link+=`-${category}`; %>
-                            <% if (link.slice(1) !== products[0].primary_category_id) { %>
-                            <li class="breadcrumb-item"><a href="../<%= link.slice(1) %>"><%= link.slice(1) %></a></li>
+                            <% if (link.slice(1) !== id) { %>
+                            <li class="breadcrumb-item"><a href="../categories/<%= link.slice(1) %>"><%= link.slice(1) %></a></li>
                             <% }; %>
                         <% }); %>
                     </ol>
@@ -48,7 +48,7 @@
                                   
                                         <div class="d-flex w-100 justify-content-between">
                                             <p class="">Price: <%= product.price %> <%= product.currency %></p>
-                                            <a class="btn btn-primary w-50 float-right self-align-baseline" href="products/<%= product.id %>">Details</a>
+                                            <a class="btn btn-primary w-50 float-right self-align-baseline" href="../products/<%= product.id %>">Details</a>
                                         </div>
                                     </div>
                                 </div>
@@ -61,9 +61,8 @@
 
         </main>
 
-        <footer>
-            <%- include('partials/footer') %>
-        </footer>
+
+        <%- include('partials/footer') %>
 
         
         <%- include('partials/bottom_scripts') %>

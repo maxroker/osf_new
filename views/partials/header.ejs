@@ -1,13 +1,22 @@
-
 <div class="d-flex flex-column flex-md-row align-items-center px-md-4 mb-3 bg-white border-bottom box-shadow">
     <h1 class="my-0 mr-md-auto font-weight-normal">OSFAcademyProject</h1>
-    <nav class="my-2 my-md-0 mr-md-3">
-        <% _.each(categories, function(category) { %>
-        <a class="p-2 text-dark" href="../<%= category.id %>"><%= category.name %></a>
-        <% }); %>
+    <nav class="nav nav-pills nav-fill nav-justified  w-50 my-2 my-md-0 mr-md-3">
+
+        <li class="nav-item"> 
+          <a class="nav-link <%= active_tab === 'mens' ? 'active' : ''; %> p-2 mx-2 border text-dark" href="../categories/mens">
+            Men's
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link <%= active_tab === 'womens' ? 'active' : ''; %> p-2 mx-2 border text-dark" href="../categories/womens">
+            Women's
+          </a>
+        </li>
 
     </nav>
-    <a class="btn btn-outline-primary" href="#">Sign up</a>
+    <a type="button" class="btn btn-outline-primary w-40" href="/">Sign up</a>
+
+
 </div>
 
-  
+

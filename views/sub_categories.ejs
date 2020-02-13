@@ -5,14 +5,14 @@
     </head>
     
     <body>
-        <header class="container">
+        <header class="container fixed-top bg-white">
             <%- include('partials/header') %>
 
             <div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item"><a href="<%= category.id %>"><%= category.name %></a></li>
+                        <li class="breadcrumb-item"><a href="../categories/<%= category.id %>"><%= category.name %></a></li>
                     </ol>
                 </nav>
             </div>
@@ -49,9 +49,7 @@
         </main>
 
 
-        <footer>
-            <%- include('partials/footer') %>
-        </footer>
+        <%- include('partials/footer') %>
 
         
         <%- include('partials/bottom_scripts') %>
