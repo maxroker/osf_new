@@ -1,6 +1,8 @@
 const express = require('express');
 
 const home = require('../routes/home');
+const categories = require('../routes/categories');
+const products = require('../routes/products');
 
 
 module.exports = function(app) {
@@ -11,4 +13,11 @@ module.exports = function(app) {
 
 
   app.use('/', home);
+  app.use('/products', products);
+
+  // app.use('/mens', categories);
+  // app.use('/womens', categories);
+  // app.get('/about', function(req, res) {
+  //   res.render('pages/about');
+  // });
 }

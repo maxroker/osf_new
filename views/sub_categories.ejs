@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('partials/head') %>
+    </head>
+    
+    <body>
+        <header class="container">
+            <%- include('partials/header') %>
+
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<%= category.id %>"><%= category.name %></a></li>
+                    </ol>
+                </nav>
+            </div>
+        </header>   
+
+        <main class="container">
+
+            <% _.each(category.categories, function(C) { %>
+                <% if (C.id === id) { %> 
+
+                    <% _.each(C.categories, function(subC) { %>
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="<%= subC.id %>">
+                                    <h2><%= subC.name %></h2>
+                                </a>
+                                <h3><%= subC.page_title %></h3>
+                                <p><%= subC.page_description %></p>
+                                <% if (subC.image) { %>
+                                <div>
+                                    <img src="/images/<%= subC.image %>">
+                                </div>
+                                <% } %>
+                           </div> 
+                        </div>  
+                        </br>
+                    <% }); %>   
+
+                <% }; %> 
+            <% }); %>         
+
+            
+             
+        </main>
+
+
+        <footer>
+            <%- include('partials/footer') %>
+        </footer>
+
+        
+        <%- include('partials/bottom_scripts') %>
+    </body>
+</html>

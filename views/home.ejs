@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('partials/head') %>
+    </head>
+    
+    <body>
+        <header class="container">
+            <%- include('partials/header') %>
+        </header>   
+
+        <main class="container">
+            </br>
+            <h2 class="text-center">Choose your category:</h2>
+            </br>
+            <div class="row">
+                <% _.each(categories, function(category) { %>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <a type="button" class="btn btn-info btn-lg btn-block" href="<%= category.id %>">
+                                <h1><%= category.name %></h1>
+                            </a>
+                            </br>
+                        
+                            <p><%= category.page_description %></p>
+                            <% if (category.image) { %>
+                            <div>
+                                <img src="/images/<%= category.image %>">
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </main>
+
+        <footer>
+            <%- include('partials/footer') %>
+        </footer>
+       
+        <%- include('partials/bottom_scripts') %>
+    </body>
+</html>
