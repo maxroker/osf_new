@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
     return res.render("categories", { 
       _: _, 
       id: id,
-      active_tab: link,
+      active_tab: link[0],
       gender_id: link[0],
       range_id: link[0] + '-' + link[1],
       title: link.join(' '),

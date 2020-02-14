@@ -19,6 +19,8 @@
         </header>   
 
         <main class="container">
+            <%- include('partials/login') %>
+            
 
             <% _.each(category.categories, function(C) { %>
                 <% if (C.id === id) { %> 
