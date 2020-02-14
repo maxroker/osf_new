@@ -1,0 +1,4 @@
+{
+  "jwtPrivateKey": "osf_jwtPrivateKey",
+  "db": "osf_db"
+}

@@ -6,8 +6,14 @@
 
 <script>
 $(document).ready(function(){
-  $("#myBtn").click(function(){
-    $("#myModal").modal();
+  $("#loginBtn").click(function(){
+    $("#loginModal").modal();
+  });
+  
+  $("#signupBtn").click(function(){
+    $("#loginModal").modal("hide");
+    $("#signupModal").modal();
   });
 });
+
 </script>

@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const winston = require('winston');
+const config = require('config');
 
 
 
 module.exports = function() {
-  const db = 'mongodb+srv://dankomaksym:12250205@categories-y532d.mongodb.net/osf_project?retryWrites=true&w=majority';
+  const password = config.get('db');
+  const db = `mongodb+srv://dankomaksym:${password}@categories-y532d.mongodb.net/osf_project?retryWrites=true&w=majority`;
   // const db = 'mongodb://localhost/osf_project';
 
   mongoose.connect(db, {useUnifiedTopology: true, useNewUrlParser: true})
