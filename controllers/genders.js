@@ -3,7 +3,6 @@ const router = express.Router();
 const _ = require('underscore');
 
 const Category = require('../models/category');
-const Product = require('../models/product');
 
 
 
@@ -26,23 +25,18 @@ router.get('/:id', async (req, res) => {
   // console.log(id);
 
   const categories = await Category.find().select('id name');
-  
-  const products = await Product.find({"primary_category_id": id});
-  if (products.length > 0) {
-    // console.log(products[0]);
-    let link = id.split('-');
-    return res.render("categories", { 
+  let category = await Category.findOne({id: id});
+  if (category) {
+    return res.render("genders", { 
       _: _, 
-      id: id,
-      active_tab: link,
-      gender_id: link[0],
-      range_id: link[0] + '-' + link[1],
-      title: link.join(' '),
+      active_tab: category.id.split('-')[0],
+      title: category.page_title,
       categories: categories,
-      products: products
+      category: category
     }); 
   }
 
+ 
   return res.render("error", { 
     _: _, 
     title: '',

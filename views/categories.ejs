@@ -7,44 +7,53 @@
     <body>
         <header class="container fixed-top bg-white">
             <%- include('partials/header') %>
-
+            
             <div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    </ol>
+                        <li class="breadcrumb-item"><a href="../genders/<%= gender_id %>"><%= gender_id %></a></li>
+                        <li class="breadcrumb-item"><a href="../ranges/<%= range_id %>"><%= range_id %></a></li>
+                    </ol>                      
                 </nav>
             </div>
         </header>   
 
         <main class="container">
 
-            <h1><%= category.name %></h1>
-            <p><%= category.page_description %></p>
-            <% if (category.image) { %>
-            <div>
-                <img src="/images/<%= category.image %>">
-            </div>
-            <% } %>
-            
-            <% _.each(category.categories, function(subC) { %>
-            <div class="card">
-                <div class="card-body">
-
-                    <a href="<%= subC.id %>">
-                        <h2><%= subC.name %></h1>
-                    </a>
-                    <p><%= subC.page_description %></p>
-                    <% if (subC.image) { %>
-                    <div>
-                        <img src="/images/<%= subC.image %>">
+            <div class="row ">
+                <% _.each(products, function(product) { %>
+                <div class="col-lg-6 mt-2">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3><%= product.name %></h3>
+                            <br>
+                            <div class="row">
+                                <div class="col-6 w-100">
+                                    
+                                    <% if (product.image_groups[2].images[0]) { %>
+                                        <div>
+                                            <img class="img w-100" src="/images/<%= product.image_groups[2].images[0].link %>">
+                                        </div>                
+                                    <% }; %>
+                                </div>
+                                <div class="col-6 w-100">
+                                    <div class="d-flex flex-column h-100 justify-content-between">
+                                        <p><%= product.short_description %></p>
+                                  
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <p class="">Price: <%= product.price %> <%= product.currency %></p>
+                                            <a class="btn btn-primary w-50 float-right self-align-baseline" href="../products/<%= product.id %>">Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
                     </div>
-                    <% } %>
-               </div> 
-            </div>  
-            </br>
-            <% }); %>                    
-             
+                </div>
+                <% }); %>                    
+            </div>
+
         </main>
 
 

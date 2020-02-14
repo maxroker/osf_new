@@ -7,18 +7,14 @@
     <body>
         <header class="container fixed-top bg-white">
             <%- include('partials/header') %>
-            
+
             <div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <% let link = ''; %>
-                        <% _.each(id.split('-'), function(category) { %>
-                        <% link+=`-${category}`; %>
-                            <% if (link.slice(1) !== id) { %>
-                            <li class="breadcrumb-item"><a href="../categories/<%= link.slice(1) %>"><%= link.slice(1) %></a></li>
-                            <% }; %>
-                        <% }); %>
+                        <li class="breadcrumb-item"><a href="../genders/<%= gender_id %>"><%= gender_id %></a></li>
+                        <li class="breadcrumb-item"><a href="../ranges/<%= range_id %>"><%= range_id %></a></li>
+                        <li class="breadcrumb-item"><a href="../categories/<%= category_id %>"><%= category_id %></a></li>
                     </ol>
                 </nav>
             </div>
@@ -27,36 +23,68 @@
         <main class="container">
 
             <div class="row ">
-                <% _.each(products, function(product) { %>
-                <div class="col-lg-6 mt-2">
+                <div class="col mt-2">
                     <div class="card h-100">
                         <div class="card-body">
                             <h3><%= product.name %></h3>
                             <br>
                             <div class="row">
                                 <div class="col-6 w-100">
+                                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                      <div class="carousel-inner">
+                                        <% let counter = 0; %>
+                                        <% let active = ''; %>
+                                        <% _.each(product.image_groups[0].images, image => { %>
+                                        <% !counter ? active = 'active' : active = ''; %>
+                                        <div class="carousel-item <%= active %>">
+                                          <img src="/images/<%= image.link %>" class="d-block w-100" alt="...">
+                                        </div>
+                                        <% counter++; %>
+                                        <% }); %>
+                                      </div>
+                                      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                      </a>
+                                      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                      </a>
+                                    </div>
                                     
-                                    <% if (product.image_groups[2].images[0]) { %>
-                                        <div>
-                                            <img class="img w-100" src="/images/<%= product.image_groups[2].images[0].link %>">
-                                        </div>                
-                                    <% }; %>
                                 </div>
                                 <div class="col-6 w-100">
                                     <div class="d-flex flex-column h-100 justify-content-between">
-                                        <p><%= product.short_description %></p>
+                                        <%= product.short_description %>
+                                        <%- product.long_description %>
+                                        
+                                        
+                                        <% _.each(product.variation_attributes, atribute => { %>
+                                        <div>
+                                            <p><%= atribute.name %>: </p>
+                                            <div class="row">
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <% _.each(atribute.values, value => { %>
+                                                    <a class="btn btn-info" href="/"><%= value.name %></a>
+                                                <% }); %>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+                                        
+                                        
+                                        
                                   
                                         <div class="d-flex w-100 justify-content-between">
-                                            <p class="">Price: <%= product.price %> <%= product.currency %></p>
-                                            <a class="btn btn-primary w-50 float-right self-align-baseline" href="../products/<%= product.id %>">Details</a>
+                                            <h3>Price: <%= product.price %> <%= product.currency %></h3>
+                                            <a class="btn btn-success w-50 float-right self-align-baseline" href="<%= product.id %>">BUY</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div> 
                     </div>
-                </div>
-                <% }); %>                    
+                </div>               
             </div>
 
         </main>

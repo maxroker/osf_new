@@ -14,9 +14,12 @@ router.get('/', async (req, res) => {
   const categories = await Category.find().select('id name');
   // console.log(products[0].long_description);
   // console.log(products[0].variation_attributes[1].values[3].name);
-  return res.render("products", { 
+  return res.render("categories", { 
       _: _, 
       id: id,
+      gender_id: '',
+      range_id: '',
+      category_id: '',
       active_tab: id.split('-'),
       title: id.split('-').join(' '),
       categories: categories,
@@ -32,11 +35,16 @@ router.get('/:id', async (req, res) => {
   const product = await Product.findOne({id: id});
   if (product) {
     // console.log(products[0]);
-    return res.render("product", { 
+    let link = product.primary_category_id.split('-');
+
+    return res.render("products", { 
       _: _, 
       id: id,
-      active_tab: product.primary_category_id.split('-')[0],
-      title: product.primary_category_id.split('-').join(' '),
+      gender_id: link[0],
+      range_id: link[0] + '-' + link[1],
+      category_id: link.join('-'),
+      active_tab: link[0],
+      title: link.join(' '),
       categories: categories,
       product: product  
     }); 

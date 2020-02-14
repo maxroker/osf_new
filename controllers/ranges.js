@@ -25,24 +25,23 @@ router.get('/:id', async (req, res) => {
   // console.log(req.url);
   // console.log(id);
 
-  const categories = await Category.find().select('id name');
-  
-  const products = await Product.find({"primary_category_id": id});
-  if (products.length > 0) {
-    // console.log(products[0]);
-    let link = id.split('-');
-    return res.render("categories", { 
+  const categories = await Category.find().select('id page_description');
+
+  const category = await Category.findOne({"categories.id": id});
+  if (category) {
+    // const subcategory = category.categories[0];
+    // console.log(subcategory);
+    return res.render("ranges", { 
       _: _, 
       id: id,
-      active_tab: link,
-      gender_id: link[0],
-      range_id: link[0] + '-' + link[1],
-      title: link.join(' '),
+      active_tab: category.id.split('-')[0],
+      title: category.page_title,
       categories: categories,
-      products: products
+      category: category
     }); 
   }
 
+ 
   return res.render("error", { 
     _: _, 
     title: '',
