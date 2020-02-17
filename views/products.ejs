@@ -23,6 +23,11 @@
         <main class="container">
             <%- include('partials/login_modal') %>
             <%- include('partials/signup_modal') %>
+
+                <% xAuthToken = 'hello'; %>
+                <% if (xAuthToken) { %>
+                <p> <%= xAuthToken %></p> 
+                <% }; %>
             
 
             <div class="row ">

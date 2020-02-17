@@ -20,6 +20,9 @@ function userValidation (req) {
 
 
 router.post('/', async (req, res) => {
+  let prevUrl = req.headers.referer;
+
+  // console.log(req.headers.referer);
   const { error } = userValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -30,8 +33,15 @@ router.post('/', async (req, res) => {
   if (!validPassword) return res.status(400).send('Invalid email or password.');
 
   const token = user.generateAuthToken();
-
-  res.send(token);
+  res.cookie('x-auth-token', token);
+  // res.render("home", { 
+  //   _: _, 
+  //   title: '',
+  //   active_tab: '',
+  //   token: token
+  //   // categories: categories
+  // }); 
+  res.redirect('back');
 
 });
 
