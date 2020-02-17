@@ -5,38 +5,61 @@
     </head>
     
     <body>
-        <header class="container fixed-top bg-white">
+        <header class="container-fluid fixed-top bg-white">
             <%- include('partials/header') %>
+
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    </ol>
+                </nav>
+            </div>
 
         </header>   
 
 
-        <main class="container">
+        <main class="container-fluid">
             <%- include('partials/login_modal') %>
             <%- include('partials/signup_modal') %>
 
+            <div class="row" >
 
-            </br>
-            <h2 class="text-center">Choose your category:</h2>
-            </br>
-            <div class="row">
-                <% _.each(categories, function(category) { %>
-                <div class="col-sm-6">
+            <% _.each(categories, function(category) { %>
+                <div class="col gender-cat">
+
+                    <h1><%= category.name %></h1>
+                    <p><%= category.page_description %></p>
+                    <% if (category.image) { %>
+                    <div>
+                        <img class="img w-50" src="/images/<%= category.image %>">
+                    </div>
+                    <% } %>
+                    
+                    <% _.each(category.categories, function(subC) { %>
                     <div class="card">
                         <div class="card-body">
 
-                            <a type="button" class="btn btn-info btn-lg btn-block" href="../genders/<%= category.id %>">
-                                <h1><%= category.page_description.split('.')[0] %></h1>
+                            <a href="../<%= subC.id %>">
+                                <h2><%= subC.name %></h2>
                             </a>
-                            </br>
-                        
-                            <p><%= category.page_description %></p>
+                            <% if (subC.image) { %>
+                            <div>
+                                <img src="/images/<%= subC.image %>">
+                            </div>
+                            <% } %>
+                            <p><%= subC.page_description %></p>
+                            <a class="btn btn-primary" href="../categories/<%= subC.id %>">View products</a>
                             
-                        </div>
-                    </div>
-                </div>
-                <% }); %>
-            </div>
+                       </div> 
+                    </div>  
+                 
+                <% }); %>  
+                </div> 
+
+            <% }); %> 
+            </div>  
+
         </main>
 
         <%- include('partials/footer') %>

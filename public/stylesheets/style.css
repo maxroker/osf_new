@@ -6,11 +6,14 @@ body {
 
 main {
   position: relative;
-  top: 150px;
+  top: 120px;
+  margin-bottom: 160px;
 }
 
 a {
   color: #00B7FF;
 }
 
-
+.gender-cat {
+  margin-bottom: 50px;
+}

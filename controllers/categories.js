@@ -8,7 +8,7 @@ const Product = require('../models/product');
 
 
 router.get('/', async (req, res) => {
-  const categories = await Category.find().select('id page_description');
+  const categories = await Category.find();
   // console.log(categories[0].categories[0].categories[3].page_title)
   res.render("home", { 
     _: _, 
@@ -25,13 +25,13 @@ router.get('/:id', async (req, res) => {
   // console.log(req.url);
   // console.log(id);
 
-  const categories = await Category.find().select('id name');
+  const categories = await Category.find();
   
-  const products = await Product.find({"primary_category_id": id});
+  const products = await Product.find({"primary_category_id": new RegExp("^" + id + "*")});
   if (products.length > 0) {
     // console.log(products[0]);
     let link = id.split('-');
-    return res.render("categories", { 
+    return res.render("products", { 
       _: _, 
       id: id,
       active_tab: link[0],
@@ -49,6 +49,7 @@ router.get('/:id', async (req, res) => {
     active_tab: '',
     categories: categories
   });
+  
   
 });
 

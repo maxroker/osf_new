@@ -2,18 +2,21 @@
     <h1 class="my-0 mr-md-auto font-weight-normal">OSFAcademyProject</h1>
 
     
-    <nav class="nav nav-pills nav-fill nav-justified  w-50 my-2 my-md-0 mr-md-3">
+    <nav class="nav my-2 my-md-0 mr-md-3">
 
-        <li class="nav-item"> 
-          <a class="nav-link <%= active_tab === 'mens' ? 'active' : ''; %> p-2 mx-2 border text-dark" href="../genders/mens">
-            Men's
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link <%= active_tab === 'womens' ? 'active' : ''; %> p-2 mx-2 border text-dark" href="../genders/womens">
-            Women's
-          </a>
-        </li>
+    <% _.each(categories, (category)=> { %>
+      <div class="dropdown">
+        <button class="btn <%= active_tab === category.id ? 'btn-primary' : 'btn-secondary'; %> active dropdown-toggle mx-1 active" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= category.name %>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <% _.each(category.categories, (subC)=> { %>
+            <a class="dropdown-item" href="../<%= subC.id %>"><%= subC.name %></a>
+          <% }); %>
+        </div>
+      </div>
+    <% }); %>
+
 
     </nav>
 
@@ -22,6 +25,9 @@
        
  
 </div>
+
+
+
 
 
 

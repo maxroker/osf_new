@@ -11,10 +11,10 @@ router.get('/', async (req, res) => {
   const id = '';
 
   const products = await Product.find();
-  const categories = await Category.find().select('id name');
+  const categories = await Category.find();
   // console.log(products[0].long_description);
   // console.log(products[0].variation_attributes[1].values[3].name);
-  return res.render("categories", { 
+  return res.render("products", { 
       _: _, 
       id: id,
       gender_id: '',
@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
-  const categories = await Category.find().select('id name');
+  const categories = await Category.find();
 
   // console.log(id);
   const product = await Product.findOne({id: id});
@@ -37,18 +37,26 @@ router.get('/:id', async (req, res) => {
     // console.log(products[0]);
     let link = product.primary_category_id.split('-');
 
-    return res.render("products", { 
+    return res.render("product", { 
       _: _, 
       id: id,
       gender_id: link[0],
       range_id: link[0] + '-' + link[1],
       category_id: link.join('-'),
       active_tab: link[0],
-      title: link.join(' '),
+      title: product.name,
       categories: categories,
       product: product  
     }); 
   }
+  
+  return res.render("error", { 
+    _: _, 
+    title: '',
+    active_tab: '',
+    categories: categories
+  });
+  
 });
 
 
