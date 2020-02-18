@@ -7,6 +7,8 @@ const categories = require('../controllers/categories');
 const products = require('../controllers/products');
 const auth = require('../controllers/auth');
 const users = require('../controllers/users');
+const cart = require('../controllers/cart');
+
 
 
 
@@ -24,6 +26,7 @@ module.exports = function(app) {
 
   app.use('/categories', categories);
   app.use('/products', products);
+  app.use('/cart', cart);
   app.use('/auth', auth);
   app.use('/users', users);
   app.use('/', home);

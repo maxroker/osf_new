@@ -36,6 +36,10 @@ router.get('/:id', async (req, res) => {
   if (product) {
     // console.log(products[0]);
     let link = product.primary_category_id.split('-');
+    // let variants = product.variants;
+    // for(variant in variants) {
+    //   // console.log(variants[variant]);
+    // };
 
     return res.render("product", { 
       _: _, 

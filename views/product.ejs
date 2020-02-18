@@ -20,15 +20,11 @@
             </div>
         </header>   
 
+
         <main class="container">
             <%- include('partials/login_modal') %>
             <%- include('partials/signup_modal') %>
-
-                <% xAuthToken = 'hello'; %>
-                <% if (xAuthToken) { %>
-                <p> <%= xAuthToken %></p> 
-                <% }; %>
-            
+           
 
             <div class="row ">
                 <div class="col mt-2">
@@ -40,15 +36,15 @@
                                 <div class="col-6 w-100">
                                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                       <div class="carousel-inner">
-                                        <% let counter = 0; %>
-                                        <% let active = ''; %>
-                                        <% _.each(product.image_groups[0].images, image => { %>
-                                        <% !counter ? active = 'active' : active = ''; %>
+                                        <% let counter = 0;
+                                        let active = '';
+                                        _.each(product.image_groups[0].images, image => {
+                                        !counter ? active = 'active' : active = ''; %>
                                         <div class="carousel-item <%= active %>">
                                           <img src="/images/<%= image.link %>" class="d-block w-100" alt="...">
                                         </div>
-                                        <% counter++; %>
-                                        <% }); %>
+                                        <% counter++;
+                                        }); %>
                                       </div>
                                       <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -65,28 +61,51 @@
                                     <div class="d-flex flex-column h-100 justify-content-between">
                                         <%= product.short_description %>
                                         <%- product.long_description %>
+
+                                            <%- product.long_description %>
+
                                         
-                                        
-                                        <% _.each(product.variation_attributes, atribute => { %>
-                                        <div>
+                                        <form role="form" action="../cart" method="post">
+                                            <% _.each(product.variation_attributes, atribute => { %>
+                                            <div class="form-group">
                                             <p><%= atribute.name %>: </p>
-                                            <div class="row">
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <% _.each(atribute.values, value => { %>
-                                                    <a class="btn btn-info" href="/"><%= value.name %></a>
-                                                <% }); %>
+
+                                                <div class="row">
+                                                    <div class="btn-group-toggle" data-toggle="buttons">
+                                                        <% _.each(atribute.values, value => { %>
+                                                        <label class="btn btn-secondary rounded-pill">
+
+                                                       
+                                                            <input type="radio" name="<%= atribute.name %>" value="<%= value.value %>"><%= value.name %>
+
+                                                        </label>
+                                                        <% }); %>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <% }); %>
+                                            </br>
+
+
+                                           
+                                            <div class="form-row">    
+                                                <h3 id="priceInChosenCurrency"><%= product.price %></h3>
+                                                
+                                                <select id="exRateOption" class="col-sm-2 form-control" name='currencies' >
+                                                   <option value='BRL' title='Brazilian Real'>BRL</option>
+                                                   <option value='CAD' title='Canadian Dollar'>CAD</option>
+                                                   <option value='CHF' title='Swiss Franc'>CHF</option>
+                                                   <option value='EUR' title='Euro'>EUR</option>
+                                                   <option value='GBP' title='British Pound Sterling'>GBP</option>
+                                                   <option value='JPY' title='Japanese Yen'>JPY</option>
+                                                   <option value='UAH' title='Ukrainian Hryvnia'>UAH</option>
+                                                   <option value='USD' title='United States Dollar' selected>USD</option>
+                                                </select>
                                             </div>
-                                        </div>
-                                        <% }); %>
-                                        
-                                        
-                                        
-                                  
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h3>Price: <%= product.price %> <%= product.currency %></h3>
-                                            <a class="btn btn-success w-50 float-right self-align-baseline" href="<%= product.id %>">BUY</a>
-                                        </div>
+                                            </br>   
+                                                <button type="submit" class="btn btn-success w-50 float-right self-align-baseline">BUY</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -102,5 +121,16 @@
 
         
         <%- include('partials/bottom_scripts') %>
+
+        <script type="text/javascript" src="../javascripts/currency_exchange_rate.js"></script>
+        <script>
+            let exRateOption = document.getElementById('exRateOption')
+            let priceInChosenCurrency = document.getElementById('priceInChosenCurrency');
+            exRateOption.addEventListener('change', async (e) => {
+                let rate = await exRate(e.target.value);
+                priceInChosenCurrency.innerHTML = (<%= product.price %> * rate).toFixed(2);
+            });
+        </script>
+        
     </body>
 </html>
