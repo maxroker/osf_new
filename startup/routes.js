@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const expressLayaouts = require('express-ejs-layouts');
+
 
 
 const home = require('../controllers/home');
@@ -19,9 +21,10 @@ module.exports = function(app) {
   app.use(bodyParser.urlencoded({extended: false}));
 
 
-
+  // EJS
+  app.use(expressLayaouts);
   app.set('view engine', 'ejs');
-  app.set('views', './views');
+  // app.set('views', './views');
 
 
   app.use('/categories', categories);

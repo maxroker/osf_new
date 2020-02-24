@@ -1,33 +1,21 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <%- include('partials/head') %>
-    </head>
+
+<header class="container fixed-top bg-white">
+    <%- include('partials/header') %>
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+            </ol>
+        </nav>
+    </div>
+</header>   
+
+<main class="container">
+    <%- include('partials/login_modal') %>
+    <%- include('partials/signup_modal') %>
     
-    <body>
-        <header class="container fixed-top bg-white">
-            <%- include('partials/header') %>
-            <div>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    </ol>
-                </nav>
-            </div>
-        </header>   
-
-        <main class="container">
-            <%- include('partials/login_modal') %>
-            <%- include('partials/signup_modal') %>
-            
-            
-            </br>
-            <h2 class="text-center alert alert-warning">Page has not been found.</h2>
-            </br>
-        </main>
-
-        <%- include('partials/footer') %>
-   
-        <%- include('partials/bottom_scripts') %>
-    </body>
-</html>
+    
+    </br>
+    <h2 class="text-center alert alert-warning">Page has not been found.</h2>
+    </br>
+</main>

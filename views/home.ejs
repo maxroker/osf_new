@@ -1,71 +1,57 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <%- include('partials/head') %>
-    </head>
-    
-    <body>
-        <header class="container-fluid fixed-top bg-white">
-            <%- include('partials/header') %>
 
+<header class="container-fluid fixed-top bg-white">
+    <%- include('partials/header') %>
+
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+            </ol>
+        </nav>
+    </div>
+
+</header>   
+
+
+<main class="container-fluid">
+    <%- include('partials/login_modal') %>
+    <%- include('partials/signup_modal') %>
+
+    <div class="row" >
+
+    <% _.each(categories, function(category) { %>
+        <div class="col gender-cat">
+
+            <h1><%= category.name %></h1>
+            <p><%= category.page_description %></p>
+            <% if (category.image) { %>
             <div>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    </ol>
-                </nav>
+                <img class="img w-50" src="/images/<%= category.image %>">
             </div>
+            <% } %>
+            
+            <% _.each(category.categories, function(subC) { %>
+            <div class="card">
+                <div class="card-body">
 
-        </header>   
-
-
-        <main class="container-fluid">
-            <%- include('partials/login_modal') %>
-            <%- include('partials/signup_modal') %>
-
-            <div class="row" >
-
-            <% _.each(categories, function(category) { %>
-                <div class="col gender-cat">
-
-                    <h1><%= category.name %></h1>
-                    <p><%= category.page_description %></p>
-                    <% if (category.image) { %>
+                    <a href="../<%= subC.id %>">
+                        <h2><%= subC.name %></h2>
+                    </a>
+                    <% if (subC.image) { %>
                     <div>
-                        <img class="img w-50" src="/images/<%= category.image %>">
+                        <img src="/images/<%= subC.image %>">
                     </div>
                     <% } %>
+                    <p><%= subC.page_description %></p>
+                    <a class="btn btn-primary" href="../categories/<%= subC.id %>">View products</a>
                     
-                    <% _.each(category.categories, function(subC) { %>
-                    <div class="card">
-                        <div class="card-body">
-
-                            <a href="../<%= subC.id %>">
-                                <h2><%= subC.name %></h2>
-                            </a>
-                            <% if (subC.image) { %>
-                            <div>
-                                <img src="/images/<%= subC.image %>">
-                            </div>
-                            <% } %>
-                            <p><%= subC.page_description %></p>
-                            <a class="btn btn-primary" href="../categories/<%= subC.id %>">View products</a>
-                            
-                       </div> 
-                    </div>  
-                 
-                <% }); %>  
-                </div> 
-
-            <% }); %> 
+               </div> 
             </div>  
+         
+        <% }); %>  
+        </div> 
 
-        </main>
+    <% }); %> 
+    </div>  
 
-        <%- include('partials/footer') %>
-   
-        <%- include('partials/bottom_scripts') %>
-    </body>
-</html>
-
-
+</main>
