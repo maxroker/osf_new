@@ -29,6 +29,7 @@ module.exports = function(app) {
   app.use('/cart', cart);
   app.use('/auth', auth);
   app.use('/users', users);
+
   app.use('/', home);
   
 }

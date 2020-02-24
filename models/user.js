@@ -39,6 +39,14 @@ const userSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 1024
   },
+  active: {
+    type: Boolean,
+    default: false
+  },
+  temporarytoken: {
+    type: String, 
+    required: true
+  },
   isAdmin: {
     type: Boolean,
     default: false

@@ -41,6 +41,8 @@ router.post('/', async (req, res) => {
   //   token: token
   //   // categories: categories
   // }); 
+
+  // res.json({success: true, message: token});
   res.redirect('back');
 
 });
