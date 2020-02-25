@@ -1,0 +1,77 @@
+
+<header class="container-fluid fixed-top bg-white">
+    <%- include('partials/header') %>
+
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+            </ol>
+        </nav>
+    </div>
+</header>   
+
+<main class="container ">
+    <%- include('partials/login_modal') %>
+    <%- include('partials/signup_modal') %>
+
+    <% if (products.length > 0) { %>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th class="align-middle" scope="col">Product</th>
+            <th class="text-center align-middle" scope="col">Quantity</th>
+            <th class="text-center align-middle" scope="col">Price</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% _.each(products, (product) => { %>
+            <tr>
+              <td style="width: 100px"><img src="/images/<%= product.item.image_groups[3].images[0].link %>" style="width: 100px" alt="<%= product.item.image_groups[3].images[0].alt %>"></td>
+              <td class="align-middle"><%= product.item.name %></td>
+              <td class="text-center align-middle"><%= product.qty %></td>
+              <td class="text-center align-middle"><%= product.price %> $</td>
+              <td class="text-center align-middle">
+                <a href="/cart/add/<%= product.item.id %>"><i class="fas fa-plus-square" style="color:green;"></i></a>
+              </td>
+              <td class="text-center align-middle">
+                <a href="/cart/reduce/<%= product.item.id %>"><i class="fas fa-minus-square" style="color:orange;"></i></a>
+              </td>
+              <td class="text-center align-middle">
+                <a href="/cart/remove/<%= product.item.id %>"><i class="far fa-2x fa-trash-alt" style="color:red;"></i></a>
+              </td>
+
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+
+      <div class="row">
+        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+          <h3 class="text-center align-middle"><strong>Total: <%= totalPrice.toFixed(2); %> $ </strong></h3>
+        </div>
+        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+          <a href="../cart/checkout" type="button" class="btn btn-lg btn-success btn-block">CHECKOUT</a>
+        </div>
+      </div>
+
+      <br>
+      <br>
+   
+    <% } else { %>
+      <div class="row">
+        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+          <h2>No Items in Cart</h2>
+        </div>
+      </div>
+    <% }; %>
+
+
+    
+
+
+</main>

@@ -1,4 +1,6 @@
 {
   "jwtPrivateKey": "osf_jwtPrivateKey",
-  "db": "osf_db"
+  "db": "osf_db",
+  "stripe_sk_test": "osf_stripe_sk_test",
+  "stripe_pk_test": "osf_stripe_pk_test"
 }

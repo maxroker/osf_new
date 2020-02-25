@@ -1,0 +1,66 @@
+
+<header class="container-fluid fixed-top bg-white">
+  <%- include('../partials/header') %>
+
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+      </ol>
+    </nav>
+  </div>
+
+</header>   
+
+
+<main class="container-fluid">
+  <%- include('../partials/login_modal') %>
+  <%- include('../partials/signup_modal') %>
+
+  <h1 class="text-center">Placed orders:</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-md-offset-4">
+      <% if (orders.length > 0) { %>
+
+        <% _.each(orders, (order) => { %>
+
+        <div class="card card-default">
+          <div class="card-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th class="align-middle" scope="col">Product</th>
+                  <th class="text-center align-middle" scope="col">Quantity</th>
+                  <th class="text-center align-middle" scope="col">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% _.each(order.cart.items, function(product) { %>               
+                <tr>
+                  <td style="width: 100px"><img src="/images/<%= product.item.image_groups[3].images[0].link %>" style="width: 100px" alt="<%= product.item.image_groups[3].images[0].alt %>"></td>
+                  <td class="align-middle"><%= product.item.name %></td>
+                  <td class="text-center align-middle"><%= product.qty %></td>
+                  <td class="text-center align-middle"><%= product.price %> $</td>
+                </tr>
+              <% }); %>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer">
+            <h4><strong class="float-right">Total price: <%= order.cart.totalPrice.toFixed(2); %></strong></h4>
+          </div>
+        </div>
+        <br>
+        <% }); %>
+        <br><br>
+ 
+      <% } else { %>
+        <h2 class="text-center">There is no submited orders yet.</h2>
+      <% }; %>
+    </div>
+  </div>
+
+</main>
+
+

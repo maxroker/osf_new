@@ -19,13 +19,19 @@
 
 
     </nav>
-
-    <a type="button" class="btn btn-outline-primary w-40 mr-md-3" href="/cart"><i class="fas fa-cart-plus"></i> Shopping Cart</a>
+    <a type="button" class="btn btn-success w-40 mr-md-3" href="/cart"><i class="fas fa-cart-plus"></i> Shopping Cart <span class="badge"><%= session.cart ? session.cart.totalQty : 0;%></span></a>
 
 
     <!-- Trigger the modal with a button -->
-    <a type="button" class="btn btn-outline-primary w-40" id="loginBtn"><i class="far fa-user"></i> Login</a>
-    <a type="button" class="btn btn-outline-primary w-40" href="/logout" hidden>Logout</a>
+    <!-- <a type="button" class="btn btn-outline-primary w-40" id="loginBtn"><i class="far fa-user"></i> Login</a> -->
+    <% if (login) { %>
+    <a type="button" class="btn btn-outline-primary w-40 mr-md-3" href="../users/profile">History</a>
+    <a type="button" class="btn btn-outline-danger w-40" href="../users/logout">Logout</a>
+    <% } else { %>
+    <!-- <a type="button" class="btn btn-outline-primary w-40 mr-md-3" href="../users/signup">Sign up</a> -->
+    <a type="button" class="btn btn-outline-warning w-40" href="../users/signin">Login</a>
+    <% }; %>
+
 
        
  

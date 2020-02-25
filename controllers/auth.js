@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const _ = require('underscore');
 
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
@@ -34,13 +33,7 @@ router.post('/', async (req, res) => {
 
   const token = user.generateAuthToken();
   res.cookie('x-auth-token', token);
-  // res.render("home", { 
-  //   _: _, 
-  //   title: '',
-  //   active_tab: '',
-  //   token: token
-  //   // categories: categories
-  // }); 
+  // res.render("home", {}); 
 
   // res.json({success: true, message: token});
   res.redirect('back');

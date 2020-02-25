@@ -1,0 +1,48 @@
+
+<header class="container-fluid fixed-top bg-white">
+  <%- include('../partials/header') %>
+
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+      </ol>
+    </nav>
+  </div>
+
+</header>   
+
+
+<main class="container-fluid">
+  <%- include('../partials/login_modal') %>
+  <%- include('../partials/signup_modal') %>
+
+  <div class="row justify-content-center">
+    <div class="col-md-4 col-md-offset-4">
+      <h1 class="text-center">Create a new account</h1>
+      <br>
+      <% if (hasErrors) { %>
+        <div class="alert alert-danger">
+          <% _.each(messages, function(message) { %>
+            <p><%= message %></p>
+          <% }); %>
+        </div>
+      <% }; %>
+      <form action="/users/signup" method="post">
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input type="text" id="email" name="email" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control">
+        </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="btn btn-success btn-block"><strong>Sign Up</strong></button>
+      </form>
+      <%// csrfToken %>
+    </div>
+  </div>
+
+
+</main>
