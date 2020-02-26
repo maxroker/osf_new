@@ -3,7 +3,7 @@
   "db": "osf_db",
   "stripe_sk_test": "osf_stripe_sk_test",
   "mail_user": "osf_mail_user",
-  "mail_pass": "ost_mail_pass"
+  "mail_pass": "osf_mail_pass"
 }
 
 
