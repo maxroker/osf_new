@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { User, userValidation, passwordValidation } = require('../models/user');
+const User = require('../models/user');
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -19,8 +19,7 @@ const Order = require('../models/order');
 const Cart = require('../models/cart');
 
 
-const csrfProtection = csrf();
-router.use(csrfProtection);
+
 
 // Old
 // create reusable transporter object using the default SMTP transport
@@ -32,7 +31,36 @@ let transporter = nodemailer.createTransport({
   }
 });
 
+
+router.post('/activate', async (req, res) => {
+  const token = req.body.token;
+  const user = await User.findOne({_id: req.body.id});
+
+  const isValid = await jwt.verify(token, config.get('jwtPrivateKey'));
+  console.log(isValid);
+  if (isValid) {
+    user.active = true;
+    await user.save();
+
+    let info = await transporter.sendMail({
+      from: config.get('mail_user'), // sender address
+      to: user.email, // list of receivers
+      subject: "Thank you for verifying your email at OSFAcademy", // Subject line
+      text: `Hello ${user.name}.
+            Your account has been successfully activated.`, // plain text body
+      html: `Hello <strong> ${user.email}</strong>. 
+            <br><br>
+            Your account has been successfully activated.`
+    });
+    res.redirect('/');
+
+  }      
+   
+});
+
 // new 
+const csrfProtection = csrf();
+router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, async (req, res, next) => {
 
@@ -75,9 +103,29 @@ router.post('/signup', passport.authenticate('local.signup', {
   failureRedirect: '/users/signup',
   failureFlash: true
 }), async (req, res, next) => {
-  // console.log(req);
-  // console.log(req.session);
 
+  console.log(req.user);
+  const user = req.user;
+  // console.log(req.session);
+  let info = await transporter.sendMail({
+    from: config.get('mail_user'), // sender address
+    to: user.email, // list of receivers
+    subject: "Hello, Please verify your email for OSFAcademy", // Subject line
+    // text: `Hello ${user.name}.
+    //       Thank you for registering at localhost.com. 
+    //       Please click on the link below to complete your activation:
+    //       href="http://localhost/users/activate`, // plain text body
+    html: `Hello <strong> ${user.name}</strong>. 
+          <br><br>
+          Thank you for registering at localhost.com. 
+          Please click on the link below to complete your activation:
+          <br><br>
+          <form action="localhost/users/activate" method="post">
+            <input name="id" value="${user._id}" type="hidden"/>
+            <input name="token" value="${user.temporarytoken}" type="hidden"/>
+            <button type="submit">Activate your account</button>
+          </form>`});
+ 
   if (req.session.oldUrl) {
     var oldUrl = req.session.oldUrl;
     req.session.oldUrl = null;
