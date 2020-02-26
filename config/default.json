@@ -1,4 +1,7 @@
 {
   "jwtPrivateKey": "secret",
-  "db": "12250205"
+  "db": "my_password",
+  "stripe_sk_test": "my_sk_testP",
+  "mail_user": "my_email",
+  "mail_pass": "password_to_my_email"
 }

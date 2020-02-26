@@ -7,7 +7,11 @@ const Product = require('../models/product');
 
 
 router.get('/', async (req, res) => {
-  res.render("home", {}); 
+  var messages = req.flash('success');
+  res.render("home", {
+    messages: messages, 
+    hasAlert: messages.length > 0
+  }); 
 });
 
 

@@ -5,7 +5,6 @@ const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-// const auth = require('../middleware/auth');
 
 const csrf = require('csurf');
 
@@ -47,6 +46,8 @@ router.post('/activate', async (req, res) => {
             <br>
             Your account has been successfully activated.`
     });
+
+    req.flash('success', 'You have activated your account!');   
     res.redirect('/');
   }         
 });
@@ -75,6 +76,8 @@ router.post('/reset-password', async (req, res) => {
             <br>
             Your password has been successfully changed.`
     });
+
+    req.flash('success', 'Your password has been successfully changed.');   
     res.redirect('/');
   }         
 });
@@ -102,6 +105,7 @@ router.get('/profile', isLoggedIn, async (req, res, next) => {
 
 router.get('/logout', isLoggedIn, function(req, res, next) {
   req.logout();
+  req.flash('success', 'Your have logged out.');   
   res.redirect('/');
 });
 
@@ -132,10 +136,6 @@ router.post('/signup', passport.authenticate('local.signup', {
     from: config.get('mail_user'), // sender address
     to: user.email, // list of receivers
     subject: "Hello, Please verify your email for OSFAcademy", // Subject line
-    // text: `Hello ${user.name}.
-    //       Thank you for registering at localhost.com. 
-    //       Please click on the link below to complete your activation:
-    //       href="http://localhost/users/activate`, // plain text body
     html: `Hello <strong> ${user.name}</strong>. 
           Thank you for registering at ${req.headers.host}. 
           Please click on the link below to complete your activation:
@@ -144,15 +144,10 @@ router.post('/signup', passport.authenticate('local.signup', {
             <input name="token" value="${user.temporarytoken}" type="hidden"/>
             <button type="submit">Activate your account</button>
           </form>`});
- 
-  if (req.session.oldUrl) {
-    var oldUrl = req.session.oldUrl;
-    req.session.oldUrl = null;
-    res.redirect(oldUrl);
-  } else {
-    // res.redirect('/users/profile');
-    res.redirect('/');
-  }
+  
+  req.flash('success', 'You have created a new account! Check your email for activation.');   
+  res.redirect('/');
+
 });
 
 
@@ -169,18 +164,12 @@ router.post('/signin', passport.authenticate('local.signin', {
   failureRedirect: '/users/signin',
   failureFlash: true
 }), function(req, res, next) {
+  // res.redirect('/');
+  
+  req.flash('success', 'You have successfully signed in!');   
   res.redirect('/');
-
-  // // res.redirect('/cart/checkout');
-  // if (req.session.oldUrl) {
-  //   var oldUrl = req.session.oldUrl;
-  //   req.session.oldUrl = null;
-  //   res.redirect('/users/checkout');
-  // } else {
-  //   // res.redirect('/users/profile');
-  //   res.redirect('/');
-  // }
 });
+
 
 router.get('/reset-password', async (req, res, next) => {
   var messages = req.flash('error');
@@ -216,6 +205,8 @@ router.post('/reset-password-letter', async (req, res) => {
               <button type="submit">Reset Password</button>
             </form>`
     });
+
+    req.flash('success', 'Check your email for password change confirmation.');      
     res.redirect('/');
   }  
 });
