@@ -20,8 +20,9 @@ module.exports = function(passport) {
     passReqToCallback: true
   }, function(req, email, password, done) {
       // console.log(req);
+      req.checkBody('name', 'Invalid name').notEmpty().isLength({min:4, max: 256});
       req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-      req.checkBody('password', 'Invalid password').notEmpty().isLength({min:4});
+      req.checkBody('password', 'Invalid password').notEmpty().isLength({min:4, max: 1024});
       var errors = req.validationErrors();
       if (errors) {
         var messages = [];
@@ -39,6 +40,7 @@ module.exports = function(passport) {
           return done(null, false, { message: 'Email is already in use' });
         };
         var newUser = new User();
+        newUser.name = req.body.name;
         newUser.email = email;
         newUser.password = newUser.encryptPassword(password);
         newUser.temporarytoken = newUser.generateAuthToken();

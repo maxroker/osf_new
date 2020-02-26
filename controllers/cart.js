@@ -71,6 +71,11 @@ router.get('/checkout', isLoggedIn, async (req, res, next) => {
   if(!req.session.cart) {
     return res.redirect('/cart');
   }
+
+  if(!req.user.active) {
+    req.flash('error', 'You need to activete your account before you are able to checkout. A confirmation letter has been sent to your email.');   
+  }
+  
   var cart = new Cart(req.session.cart);
   var errMsg = req.flash('error')[0];
   res.render('checkout', {
@@ -81,7 +86,7 @@ router.get('/checkout', isLoggedIn, async (req, res, next) => {
 });
 
 
-router.post('/checkout', isLoggedIn, async (req, res, next) => {
+router.post('/checkout', isLoggedIn, isActivated, async (req, res, next) => {
  
   if(!req.session.cart) {
     return res.redirect('/cart');
@@ -138,3 +143,9 @@ function isLoggedIn(req, res, next) {
   res.redirect('/users/signin');
 };
 
+function isActivated(req, res, next) {
+  if (req.user.active) {
+    return next();
+  }
+  res.redirect('/');
+};
