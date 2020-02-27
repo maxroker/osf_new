@@ -24,18 +24,51 @@ router.get('/', async (req, res, next) => {
 });
 
 
-router.get('/add/:id', async (req, res, next) => {
+router.post('/add', async (req, res, next) => {
   // console.log(req.headers.referer);
-  // console.log(req.headers.referer.includes('/cart'));
   // console.log(req.url);
-  var productId = req.params.id;
-  // console.log(productId);
+  var productId = req.body.id;
+  // console.log(req.body);
+  // const p = await Product.findOne({id: '22956726'});
+  // console.log(JSON.stringify(p.variation_attributes));
+  // console.log(JSON.stringify(p.variants));
+
+  const selectedProduct = {};
+  for(option in req.body) {
+    if(option != 'id' && option != 'currencies') {
+      selectedProduct[option] = req.body[option]
+    };
+  };
 
   var cart = new Cart(req.session.cart ? req.session.cart : {});
 
   const product = await Product.findOne({id: productId});
+
+  let variantProductId;
+  for(obj in product.variants) {
+      if (isEquivalent(selectedProduct, product.variants[obj].variation_values)) {
+        variantProductId = product.variants[obj].product_id; 
+      };
+  };
+
+  const selectedProductAtr = {};
+  for(obj in product.variation_attributes) {
+    for(option in selectedProduct) {
+
+      if (product.variation_attributes[obj].id == option) {
+        for (val in product.variation_attributes[obj].values) {
+          if (product.variation_attributes[obj].values[val].value == selectedProduct[option]) {
+            selectedProductAtr[option] = product.variation_attributes[obj].values[val].name         
+            // console.log(product.variation_attributes[obj].values[val].name);
+          }
+        }
+      }
+    }   
+  };
+  // console.log(selectedProductAtr);
   
-  await cart.add(product, product.id);
+  // await cart.add(product, product.id);
+  await cart.add(product, variantProductId, product.id, selectedProduct, selectedProductAtr);
   req.session.cart = cart;
   // console.log(req.session.cart);
   if (req.headers.referer.includes('/cart')) {
@@ -148,4 +181,23 @@ function isActivated(req, res, next) {
     return next();
   }
   res.redirect('/');
+};
+
+function isEquivalent(a, b) {
+    // Create arrays of property names
+    var aProps = Object.getOwnPropertyNames(a);
+    var bProps = Object.getOwnPropertyNames(b);
+
+    for (var i = 0; i < aProps.length; i++) {
+        var propName = aProps[i];
+
+        // If values of same property are not equal,
+        // objects are not equivalent
+        if (a[propName] !== b[propName]) {
+            return false;
+        }
+    };
+    // If we made it this far, objects
+    // are considered equivalent
+    return true;
 };

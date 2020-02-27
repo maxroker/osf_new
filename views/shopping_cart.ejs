@@ -21,6 +21,11 @@
           <tr>
             <th scope="col"></th>
             <th class="align-middle" scope="col">Product</th>
+            <th class="text-center align-middle" scope="col">Color</th>
+            <th class="text-center align-middle" scope="col">Size</th>
+            <th class="text-center align-middle" scope="col"></th>
+
+   
             <th class="text-center align-middle" scope="col">Quantity</th>
             <th class="text-center align-middle" scope="col">Price</th>
             <th scope="col"></th>
@@ -33,16 +38,29 @@
             <tr>
               <td style="width: 100px"><img src="/images/<%= product.item.image_groups[3].images[0].link %>" style="width: 100px" alt="<%= product.item.image_groups[3].images[0].alt %>"></td>
               <td class="align-middle"><%= product.item.name %></td>
+              <% _.each(product.attributes, attr => { %>
+                <td class="text-center align-middle"><%= attr %></td>     
+              <% }); %>
+              <% if(_.size(product.attributes) < 3) { %>
+                <td class="text-center align-middle"></td> 
+              <% }; %>
               <td class="text-center align-middle"><%= product.qty %></td>
               <td class="text-center align-middle"><%= product.price %> $</td>
               <td class="text-center align-middle">
-                <a href="/cart/add/<%= product.item.id %>"><i class="fas fa-plus-square" style="color:green;"></i></a>
+                <form action="/cart/add/" method="post">
+                  <input name="id" value="<%= product.item.id %>" hidden>
+                  <% for(option in product.selection) { %>
+                    <input name="<%= option %>" value="<%= product.selection[option] %>" hidden>
+                  <% }; %>                   
+                <button type="submit" style="border:none;"><i class="fas fa-plus-square" style="color:green;"></i></button >
+
+                </form>
               </td>
               <td class="text-center align-middle">
-                <a href="/cart/reduce/<%= product.item.id %>"><i class="fas fa-minus-square" style="color:orange;"></i></a>
+                <a href="/cart/reduce/<%= product.id %>"><i class="fas fa-minus-square" style="color:orange;"></i></a>
               </td>
               <td class="text-center align-middle">
-                <a href="/cart/remove/<%= product.item.id %>"><i class="far fa-2x fa-trash-alt" style="color:red;"></i></a>
+                <a href="/cart/remove/<%= product.id %>"><i class="far fa-2x fa-trash-alt" style="color:red;"></i></a>
               </td>
 
             </tr>

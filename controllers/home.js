@@ -14,6 +14,11 @@ router.get('/', async (req, res) => {
   }); 
 });
 
+router.post('/selected', (req, res) => {
+  console.log(req.body);
+  res.redirect('/');
+})
+
 
 router.get('/:id', async (req, res) => {
   const id = req.params.id;

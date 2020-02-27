@@ -57,7 +57,7 @@
                 <%- product.long_description %>
 
                 
-                <form role="form" action="../add-to-cart" method="post">
+                <form role="form" action="../cart/add" method="post">
                   <% _.each(product.variation_attributes, atribute => { %>
                   <div class="form-group">
                   <p><%= atribute.name %>: </p>
@@ -67,7 +67,8 @@
                         <% _.each(atribute.values, value => { %>
                         <label class="btn btn-secondary rounded-pill">
 
-                          <input type="radio" name="<%= atribute.name %>" value="<%= value.value %>"><%= value.name %>
+                          <input type="radio" name="<%= atribute.id %>" value="<%= value.value %>"><%= value.name %>
+                         
 
                         </label>
                         <% }); %>
@@ -93,9 +94,11 @@
                       <option value='USD' title='United States Dollar' selected>USD</option>
                     </select>
                   </div>
+                  <input type="hidden" name="id" value="<%= product.id %>">
+
                   </br>   
-                      <!-- <button type="submit" class="btn btn-success w-50 float-right self-align-baseline" href>Add to cart</button> -->
-                      <a class="btn btn-success w-50 float-right self-align-baseline" href="../cart/add/<%= product.id %>">Add to cart</a>
+                      <button type="submit" class="btn btn-success w-50 float-right self-align-baseline" href>Add to cart</button>
+                      <!-- <a class="btn btn-success w-50 float-right self-align-baseline" href="../cart/add/<%= product.id %>">Add to cart</a> -->
 
                   </div>
                 </form>

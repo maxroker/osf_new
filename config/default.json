@@ -1,7 +1,7 @@
 {
   "jwtPrivateKey": "secret",
-  "db": "my_password",
-  "stripe_sk_test": "my_sk_testP",
-  "mail_user": "my_email",
-  "mail_pass": "password_to_my_email"
+  "db": "12250205",
+  "stripe_sk_test": "sk_test_194zb9xjJUEMr7G35gHWf5jA00xm8IxQ4P",
+  "mail_user": "maxgalante20@gmail.com",
+  "mail_pass": "read789home"
 }
