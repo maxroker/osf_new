@@ -5,13 +5,8 @@ const Product = require('../models/product');
 
 
 router.get('/', async (req, res) => {
-
   const products = await Product.find();
-  // console.log(products[0].long_description);
-  // console.log(products[0].variation_attributes[1].values[3].name);
   return res.render("products", { 
-    // active_tab: this.id.split('-'),
-    // title: this.id.split('-').join(' '),
     id: '',
     gender_id: '',
     range_id: '',
@@ -25,13 +20,14 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
   const product = await Product.findOne({id: id});
+  
+  const attributes = []
+  product.variation_attributes.forEach((atr) => {
+    attributes.push(atr.id)    
+  });
+ 
   if (product) {
-    // console.log(products[0]);
     let link = product.primary_category_id.split('-');
-    // let variants = product.variants;
-    // for(variant in variants) {
-    //   // console.log(variants[variant]);
-    // };
 
     return res.render("product", { 
       id: id,
@@ -40,7 +36,10 @@ router.get('/:id', async (req, res) => {
       category_id: link.join('-'),
       active_tab: link[0],
       title: product.name,
-      product: product  
+      product: product,
+      variants: product.variants,
+      options: product.variation_attributes,
+      attributes: attributes
     }); 
   }
   

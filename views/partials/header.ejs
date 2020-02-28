@@ -1,18 +1,16 @@
 <div class="d-flex flex-column flex-md-row align-items-center px-md-4 mb-3 bg-white border-bottom box-shadow">
     <h1 class="my-0 mr-md-auto font-weight-normal">OSFAcademyProject</h1>
-
     
     <nav class="nav my-2 my-md-0 mr-md-3">
-
     <% _.each(categories, (category)=> { %>
       <div class="dropdown">
         <button class="btn <%= active_tab === category.id ? 'btn-primary' : 'btn-secondary'; %> active dropdown-toggle mx-1 active" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= category.name %>
+            <%= category.name %>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <% _.each(category.categories, (subC)=> { %>
-            <a class="dropdown-item" href="../<%= subC.id %>"><%= subC.name %></a>
-          <% }); %>
+            <% _.each(category.categories, (subC)=> { %>
+                <a class="dropdown-item" href="../<%= subC.id %>"><%= subC.name %></a>
+            <% }); %>
         </div>
       </div>
     <% }); %>
@@ -21,19 +19,13 @@
     </nav>
     <a type="button" class="btn btn-success w-40 mr-md-3" href="/cart"><i class="fas fa-cart-plus"></i> Shopping Cart <span class="badge"><%= session.cart ? session.cart.totalQty : 0;%></span></a>
 
-
-    <!-- Trigger the modal with a button -->
-    <!-- <a type="button" class="btn btn-outline-primary w-40" id="loginBtn"><i class="far fa-user"></i> Login</a> -->
     <% if (login) { %>
-    <a type="button" class="btn btn-outline-primary w-40 mr-md-3" href="../users/profile">History</a>
-    <a type="button" class="btn btn-outline-danger w-40" href="../users/logout">Logout</a>
+        <a type="button" class="btn btn-outline-primary w-40 mr-md-3" href="../users/profile">History</a>
+        <a type="button" class="btn btn-outline-danger w-40" href="../users/logout">Logout</a>
     <% } else { %>
-    <!-- <a type="button" class="btn btn-outline-primary w-40 mr-md-3" href="../users/signup">Sign up</a> -->
-    <a type="button" class="btn btn-outline-warning w-40" href="../users/signin">Login</a>
+        <a type="button" class="btn btn-outline-warning w-40" href="../users/signin">Login</a>
     <% }; %>
-
-
-       
+     
  
 </div>
 

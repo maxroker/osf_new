@@ -16,8 +16,6 @@
 
 
 <main class="container">
-  <%- include('partials/login_modal') %>
-  <%- include('partials/signup_modal') %>
  
 
   <div class="row ">
@@ -57,28 +55,27 @@
                 <%- product.long_description %>
 
                 
-                <form role="form" action="../cart/add" method="post">
+                <form id="product-selection-form" role="form" action="../cart/add" method="post">
                   <% _.each(product.variation_attributes, atribute => { %>
-                  <div class="form-group">
+                  <div  class="form-group">
                   <p><%= atribute.name %>: </p>
-
                     <div class="row">
                       <div class="btn-group-toggle" data-toggle="buttons">
                         <% _.each(atribute.values, value => { %>
-                        <label class="btn btn-secondary rounded-pill">
-
+                        <label id="sel<%= value.value %>"class="btn btn-secondary rounded-pill">
                           <input type="radio" name="<%= atribute.id %>" value="<%= value.value %>"><%= value.name %>
-                         
 
                         </label>
                         <% }); %>
+
+
                       </div>
                     </div>
                   </div>
                   <% }); %>
                   </br>
 
-
+                  
                  
                   <div class="form-row">    
                     <h3 id="priceInChosenCurrency"><%= product.price %></h3>
@@ -96,9 +93,9 @@
                   </div>
                   <input type="hidden" name="id" value="<%= product.id %>">
 
+
                   </br>   
                       <button type="submit" class="btn btn-success w-50 float-right self-align-baseline" href>Add to cart</button>
-                      <!-- <a class="btn btn-success w-50 float-right self-align-baseline" href="../cart/add/<%= product.id %>">Add to cart</a> -->
 
                   </div>
                 </form>
@@ -120,5 +117,29 @@
     exRateOption.addEventListener('change', async (e) => {
         let rate = await exRate(e.target.value);
         priceInChosenCurrency.innerHTML = (<%= product.price %> * rate).toFixed(2);
+    });   
+</script>
+
+<script>
+  <% _.each(options, option => { %>
+    $(document).ready(function(){
+      $('#product-selection-form input[type=radio]').click(function(event){
+        if(`${this.name}` == '<%=option.id%>') {
+          <% variants.forEach((variant) => { %> 
+            <% _.each(attributes, atr => { %>              
+                    $(`#sel<%= variant.variation_values[atr] %>`).css('background-color', 'mediumseagreen');          
+            <% }); %>
+          <% }); %>
+
+          <% variants.forEach((variant) => { %> 
+              <% _.each(attributes, atr => { %>                     
+                if (`<%= atr %>` != `${this.name}` && `<%= variant.variation_values[option.id] %>` == `${this.value}`) {       
+                  $(`#sel<%= variant.variation_values[atr] %>`).css('background-color', 'seagreen');          
+                } 
+              <% }); %>
+          <% }); %>
+        }
+      });
     });
+  <% }); %>   
 </script>

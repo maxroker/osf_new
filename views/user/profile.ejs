@@ -14,8 +14,6 @@
 
 
 <main class="container-fluid">
-  <%- include('../partials/login_modal') %>
-  <%- include('../partials/signup_modal') %>
 
   <h1 class="text-center">Placed orders:</h1>
   <div class="row justify-content-center">
@@ -31,6 +29,9 @@
                 <tr>
                   <th scope="col"></th>
                   <th class="align-middle" scope="col">Product</th>
+                  <th class="text-center align-middle" scope="col">Color</th>
+                  <th class="text-center align-middle" scope="col">Size</th>
+                  <th class="text-center align-middle" scope="col"></th>
                   <th class="text-center align-middle" scope="col">Quantity</th>
                   <th class="text-center align-middle" scope="col">Price</th>
                 </tr>
@@ -40,6 +41,12 @@
                 <tr>
                   <td style="width: 100px"><img src="/images/<%= product.item.image_groups[3].images[0].link %>" style="width: 100px" alt="<%= product.item.image_groups[3].images[0].alt %>"></td>
                   <td class="align-middle"><%= product.item.name %></td>
+                    <% _.each(product.attributes, attr => { %>
+                      <td class="text-center align-middle"><%= attr %></td>     
+                    <% }); %>
+                    <% if(_.size(product.attributes) < 3) { %>
+                      <td class="text-center align-middle"></td> 
+                    <% }; %>
                   <td class="text-center align-middle"><%= product.qty %></td>
                   <td class="text-center align-middle"><%= product.price %> $</td>
                 </tr>
