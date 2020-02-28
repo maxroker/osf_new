@@ -32,18 +32,18 @@
     <div class="row" >
 
     <% _.each(categories, function(category) { %>
-        <div class="col gender-cat">
+        <div class="col col-sm-6 gender-cat">
 
             <h1><%= category.name %></h1>
             <p><%= category.page_description %></p>
             <% if (category.image) { %>
             <div>
-                <img class="img w-50" src="/images/<%= category.image %>">
+                <img class="img-fluid mx-auto" src="/images/<%= category.image %>">
             </div>
             <% } %>
             
             <% _.each(category.categories, function(subC) { %>
-            <div class="card">
+            <div class="card mb-2">
                 <div class="card-body">
 
                     <a href="../<%= subC.id %>">
@@ -51,7 +51,7 @@
                     </a>
                     <% if (subC.image) { %>
                     <div>
-                        <img src="/images/<%= subC.image %>">
+                        <img class="img-fluid mx-auto" src="/images/<%= subC.image %>">
                     </div>
                     <% } %>
                     <p><%= subC.page_description %></p>

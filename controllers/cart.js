@@ -29,10 +29,6 @@ router.post('/add', async (req, res, next) => {
   // console.log(req.headers.referer);
   // console.log(req.url);
   var productId = req.body.id;
-  console.log(req.body);
-  // const p = await Product.findOne({id: '22956726'});
-  // console.log(JSON.stringify(p.variation_attributes));
-  // console.log(JSON.stringify(p.variants));
 
   const selectedProduct = {};
   for(option in req.body) {
@@ -41,7 +37,7 @@ router.post('/add', async (req, res, next) => {
     };
   };
 
-  console.log(selectedProduct);
+  // console.log(selectedProduct);
 
   var cart = new Cart(req.session.cart ? req.session.cart : {});
 
@@ -51,13 +47,9 @@ router.post('/add', async (req, res, next) => {
   for(obj in product.variants) {
       if (isEquivalent(selectedProduct, product.variants[obj].variation_values)) {
         variantProductId = product.variants[obj].product_id; 
-        console.log('yes');
+        // console.log('yes');
       };
-      // console.log(product.variants[obj].variation_values);
-      // var ready = _.matcher(selectedProduct);
-      // var readyToGoList = _.filter(product.variants[obj].variation_values, ready);
-      // console.log(readyToGoList);
-      console.log(_.isMatch(product.variants[obj].variation_values, req.body));
+
   };
 
   const selectedProductAtr = {};

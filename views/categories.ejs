@@ -18,7 +18,7 @@
         <% if (C.id === id) { %> 
 
             <% _.each(C.categories, function(subC) { %>
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-body">
                         <a href="../categories/<%= subC.id %>">
                             <h2><%= subC.name %></h2>
